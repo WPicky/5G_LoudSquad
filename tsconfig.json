@@ -2,6 +2,13 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@components/*": ["app/components/*"],
+      "@models*": ["app/models/*"],
+      "@services*": ["app/services/*"],
+      "@env/*": ["environments/*"]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
