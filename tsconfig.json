@@ -4,7 +4,6 @@
     "baseUrl": "./",
     "paths": {
       "@app/*": ["app/*"],
-      "@components/*": ["app/components/*"],
       "@models/*": ["app/models/*"],
       "@services/*": ["app/services/*"],
       "@env/*": ["environments/*"]

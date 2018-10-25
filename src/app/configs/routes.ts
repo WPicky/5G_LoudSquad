@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { NotFoundPageComponent } from '@components/not-found-page/not-found-page.component';
+import { NotFoundPageComponent } from '@app/shared/components/not-found-page/not-found-page.component';
 
 export const appRoutes: Routes = [
     { path: 'home', component: NotFoundPageComponent },

@@ -6,7 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
 import { appRoutes } from '@app/configs/routes';
-import { NotFoundPageComponent } from '@components/not-found-page/not-found-page.component';
+import { NotFoundPageComponent } from '@app/shared/components/not-found-page/not-found-page.component';
+import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { NotFoundPageComponent } from '@components/not-found-page/not-found-page
         RouterModule.forRoot(
             appRoutes,
             { enableTracing: true } // <-- debugging purposes only
-        )
+        ),
+        SharedModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
