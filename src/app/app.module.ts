@@ -8,11 +8,13 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from '@app/configs/routes';
 import { NotFoundPageComponent } from '@app/shared/components/not-found-page/not-found-page.component';
 import { SharedModule } from '@app/shared/shared.module';
+import { ListComponent } from './components/users/list/list.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NotFoundPageComponent,
+        ListComponent,
     ],
     imports: [
         BrowserModule,

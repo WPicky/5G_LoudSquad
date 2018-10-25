@@ -1,0 +1,8 @@
+<mat-list>
+    <h3 mat-subheader>Utilisateurs</h3>
+    <mat-list-item *ngFor="let user of users">
+        <mat-icon mat-list-icon>account_circle</mat-icon>
+        <h4 mat-line>{{user.login}}</h4>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+</mat-list>
