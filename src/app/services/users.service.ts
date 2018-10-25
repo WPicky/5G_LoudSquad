@@ -1,30 +1,37 @@
 import { Injectable } from '@angular/core';
-import { User } from '@models/user';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
 import { environment } from '@env/environment';
 import { catchError, tap } from 'rxjs/operators';
+import { ApiResponse } from '@models/api-response';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class UsersService {
+  constructor(private http: HttpClient) { }
 
-    constructor(private http: HttpClient) { }
+  getAll (): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(environment.api_routes.users_get_all)
+      .pipe(
+        tap(res => console.log('Fetched users', res)),
+        catchError(this.handleError)
+      );
+  }
 
-    getAll (): Observable<User[]> {
-        return this.http.get<User[]>(environment.api_routes.users_get_all)
-            .pipe(
-                tap(heroes => console.log('Fetched users')),
-                catchError(this.handleError('getAll', []))
-            );
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
     }
-
-    private handleError<T> (operation = 'operation', result?: T) {
-        return (error: any): Observable<T> => {
-            console.error(`${operation} failed: ${error.message}`, error);
-
-            return of(result as T);
-        };
-    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  };
 }
