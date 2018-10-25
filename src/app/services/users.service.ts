@@ -1,22 +1,30 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/user';
+import { User } from '@models/user';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { environment } from '@env/environment';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UsersService {
 
-    constructor() { }
+    constructor(private http: HttpClient) { }
 
-    getAll(): Array<User> {
-        const users: User[] = [
-            {id: 1, login: 'martin'},
-            {id: 2, login: 'martine'},
-            {id: 3, login: 'jade'},
-            {id: 4, login: 'thibault'},
-            {id: 5, login: 'jimmy'},
-        ];
+    getAll (): Observable<User[]> {
+        return this.http.get<User[]>(environment.api_routes.users_get_all)
+            .pipe(
+                tap(heroes => console.log('Fetched users')),
+                catchError(this.handleError('getAll', []))
+            );
+    }
 
-        return users;
+    private handleError<T> (operation = 'operation', result?: T) {
+        return (error: any): Observable<T> => {
+            console.error(`${operation} failed: ${error.message}`, error);
+
+            return of(result as T);
+        };
     }
 }

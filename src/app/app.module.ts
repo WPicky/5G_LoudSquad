@@ -6,15 +6,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
 import { appRoutes } from '@app/configs/routes';
-import { NotFoundPageComponent } from '@app/shared/components/not-found-page/not-found-page.component';
+import { NotFoundPageComponent } from '@app/core/components/not-found-page/not-found-page.component';
 import { SharedModule } from '@app/shared/shared.module';
-import { ListComponent } from './components/users/list/list.component';
+import { UsersModule } from '@app/users/users.module';
+import { CoreModule } from '@app/core/core.module';
 
 @NgModule({
     declarations: [
         AppComponent,
         NotFoundPageComponent,
-        ListComponent,
     ],
     imports: [
         BrowserModule,
@@ -23,7 +23,9 @@ import { ListComponent } from './components/users/list/list.component';
             appRoutes,
             { enableTracing: true } // <-- debugging purposes only
         ),
+        CoreModule,
         SharedModule,
+        UsersModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -2,8 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const api_routes = {
+    users_get_all: 'api/users',
+};
+
 export const environment = {
-  production: false
+    production: false,
+    api_routes,
 };
 
 /*
