@@ -12,22 +12,21 @@ import { UsersModule } from '@app/users/users.module';
 import { CoreModule } from '@app/core/core.module';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NotFoundPageComponent,
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        RouterModule.forRoot(
-            appRoutes,
-            { enableTracing: true } // <-- debugging purposes only
-        ),
-        CoreModule,
-        SharedModule,
-        UsersModule,
-    ],
-    providers: [],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    NotFoundPageComponent,
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(
+      appRoutes,
+    ),
+    UsersModule,
+    SharedModule,
+    CoreModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

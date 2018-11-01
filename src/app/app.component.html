@@ -1,11 +1,13 @@
 <nav>
-    <a routerLink="/home" routerLinkActive="active">Accueil</a>
-    <a routerLink="/login" routerLinkActive="active">Connexion</a>
-    <a routerLink="/conversation" routerLinkActive="active">Conversation</a>
+  <a routerLink="/home" routerLinkActive="active">Accueil</a>
+  <a routerLink="/login" routerLinkActive="active">Connexion</a>
+  <a routerLink="/conversation" routerLinkActive="active">Conversation</a>
 </nav>
 
 <router-outlet></router-outlet>
 
 <aside>
-    <app-list></app-list>
+  <app-list-filters></app-list-filters>
+
+  <app-list></app-list>
 </aside>
