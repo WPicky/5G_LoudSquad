@@ -1,20 +1,13 @@
 <mat-list>
   <h3 mat-subheader>Utilisateurs</h3>
 
-  <mat-form-field>
-    <mat-select placeholder="Statut"
-                [formControl]="toppings"
-                multiple>
-      <mat-option *ngFor="let status of statuses"
-                  [value]="topping">
-        {{ status }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <mat-list-item *ngFor="let user of filteredUsers">
+    <img matListAvatar [src]="user.avatar" alt="">
+    <span [ngClass]="[statusColor[user.status.id], 'status-indicator']"></span>
 
-  <mat-list-item *ngFor="let user of users">
-    <mat-icon mat-list-icon>account_circle</mat-icon>
-    <h4 mat-line>{{ user.login }}</h4>
+    <h4 mat-line>
+      {{ user.login }}&nbsp;
+    </h4>
   </mat-list-item>
 
   <mat-divider></mat-divider>

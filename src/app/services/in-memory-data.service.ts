@@ -9,11 +9,11 @@ export class InMemoryDataService implements InMemoryDbService {
       code: 'T0004',
       descritpion: 'Liste des utilisateurs inscrits',
       payload: [
-        {id: 1, login: 'martin'},
-        {id: 2, login: 'martine'},
-        {id: 3, login: 'jade'},
-        {id: 4, login: 'thibault'},
-        {id: 5, login: 'jimmy'},
+        {id: 1, login: 'martin', status: {id: 1, name: 'Connecté(e)'}, avatar: 'https://randomuser.me/api/portraits/thumb/men/61.jpg'},
+        {id: 2, login: 'martine', status: {id: 3, name: 'Déconnecté(e)'}, avatar: 'https://randomuser.me/api/portraits/thumb/women/62.jpg'},
+        {id: 3, login: 'jade', status: {id: 1, name: 'Connecté(e)'}, avatar: 'https://randomuser.me/api/portraits/thumb/women/63.jpg'},
+        {id: 4, login: 'thibault', status: {id: 3, name: 'Déconnecté(e)'}, avatar: 'https://randomuser.me/api/portraits/thumb/men/64.jpg'},
+        {id: 5, login: 'jimmy', status: {id: 2, name: 'Absent(e)'}, avatar: 'https://randomuser.me/api/portraits/thumb/men/65.jpg'},
       ],
     };
 

@@ -7,4 +7,5 @@ export interface User {
   id: number;
   login: string;
   status: UserStatus;
+  avatar: string;
 }

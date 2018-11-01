@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { environment } from '@env/environment';
 import { catchError, tap } from 'rxjs/operators';
 import { ApiResponse } from '@models/api-response';
@@ -9,6 +9,11 @@ import { ApiResponse } from '@models/api-response';
   providedIn: 'root'
 })
 export class UsersService {
+  private selectedStatuses = new BehaviorSubject([]);
+  private searchedLogin = new BehaviorSubject('');
+  currentSelectedStatuses = this.selectedStatuses.asObservable();
+  currentSearchedLogin = this.searchedLogin.asObservable();
+
   constructor(private http: HttpClient) { }
 
   getAll (): Observable<ApiResponse> {
@@ -33,5 +38,13 @@ export class UsersService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
+
+  changeSelectedStatuses(statuses: Array<string>) {
+    this.selectedStatuses.next(statuses);
+  }
+
+  changeSearchedLogin(login: string) {
+    this.searchedLogin.next(login);
+  }
 }

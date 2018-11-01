@@ -20,12 +20,11 @@ import { CoreModule } from '@app/core/core.module';
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(
-    appRoutes,
-    { enableTracing: true } // <-- debugging purposes only
+      appRoutes,
     ),
-    CoreModule,
-    SharedModule,
     UsersModule,
+    SharedModule,
+    CoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
