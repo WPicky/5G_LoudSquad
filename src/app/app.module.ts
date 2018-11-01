@@ -10,6 +10,7 @@ import { NotFoundPageComponent } from '@app/core/components/not-found-page/not-f
 import { SharedModule } from '@app/shared/shared.module';
 import { UsersModule } from '@app/users/users.module';
 import { CoreModule } from '@app/core/core.module';
+import { ConversationsModule } from '@app/conversations/conversations.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CoreModule } from '@app/core/core.module';
       appRoutes,
     ),
     UsersModule,
+    ConversationsModule,
     SharedModule,
     CoreModule,
   ],

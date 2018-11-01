@@ -3,13 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 const api_routes = {
-    users_get_all: 'api/users_get_all',
-    users_get_onlines: 'api/users_get_onlines',
+  users_get_all: 'api/users_get_all',
+  users_get_onlines: 'api/users_get_onlines',
+  discussions_list: 'api/discussions_list',
+  discussions_get_messages: 'api/discussions_get_messages',
 };
 
 export const environment = {
-    production: false,
-    api_routes,
+  production: false,
+  api_routes,
 };
 
 /*
