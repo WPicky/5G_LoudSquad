@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../../services/users.service';
 import { User, UserStatus } from '../../../models/user';
 import { ApiResponse } from '@models/api-response';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-list',
@@ -17,7 +18,10 @@ export class ListComponent implements OnInit {
   };
   statusColor: Object;
 
-  constructor(private usersService: UsersService) {
+  constructor(
+      private usersService: UsersService,
+      public snackBar: MatSnackBar,
+  ) {
     this.statusColor = {
       1: 'success',
       2: 'warning',
@@ -36,6 +40,8 @@ export class ListComponent implements OnInit {
     });
 
     this.getAllUsers();
+
+    setInterval(() => this.getConnectedUsers(), 2000);
   }
 
   getAllUsers(): void {
@@ -43,6 +49,38 @@ export class ListComponent implements OnInit {
       .subscribe((res: ApiResponse) => {
         this.users = res.payload;
         this.filteredUsers = this.users;
+      });
+  }
+
+  getConnectedUsers(): void {
+    this.usersService.getConnected()
+      .subscribe((res: ApiResponse) => {
+        const newConnected = [];
+        const connectedUsers = res.payload;
+        let disconnectedNumber = 0;
+
+        this.users.map(user => {
+          const connectedUser = connectedUsers.find(u => u.id === user.id);
+
+          if (connectedUser) {
+            if (connectedUser.status.id === 1 && user.status.id !== connectedUser.status.id) {
+              newConnected.push(connectedUser.login);
+            }
+          } else {
+            if (user.status.id !== 3) {
+              disconnectedNumber += 1;
+            }
+          }
+
+          // Si on ne trouve pas l'user dans la liste des connectés, alors on passe son statut à déconnecté
+          user.status = (connectedUser) ? connectedUser.status : {id: 3, name: 'Déconnecté(e)'};
+
+          return user;
+        });
+
+        if (newConnected.length > 0 || disconnectedNumber > 0) {
+          this.createGetConnectedInfosMessage(newConnected, disconnectedNumber);
+        }
       });
   }
 
@@ -71,6 +109,27 @@ export class ListComponent implements OnInit {
 
         return filters[eachKey].includes(eachObj[eachKey]);
       });
+    });
+  }
+
+  createGetConnectedInfosMessage(newConnected, disconnectedNumber) {
+    const verb = newConnected.length > 1 ? 'sont' : 'est';
+    const newConnectedStr = newConnected.join(', ');
+    const newConnectedPart = newConnected.length > 0 ? `${newConnectedStr} ${verb} désormais en ligne.` : '';
+
+    const isPlural = disconnectedNumber.length > 1;
+    const disconnectedPart = disconnectedNumber > 0 ? `${disconnectedNumber} utilisateur${isPlural ? 's' : ''} ${isPlural ? 'se sont' : 's\'est'} déconnecté${isPlural ? 's' : ''}.` : '';
+
+    const message = `${newConnectedPart} ${disconnectedPart}`;
+
+    if (newConnectedPart || disconnectedPart) {
+      this.showConnectedInfosMessage(message);
+    }
+  }
+
+  showConnectedInfosMessage(message) {
+    this.snackBar.open(message, '', {
+      duration: 2000,
     });
   }
 }

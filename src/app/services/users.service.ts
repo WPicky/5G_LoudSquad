@@ -16,12 +16,20 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
-  getAll (): Observable<ApiResponse> {
+  getAll(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(environment.api_routes.users_get_all)
       .pipe(
         tap(res => console.log('Fetched users', res)),
         catchError(this.handleError)
       );
+  }
+
+  getConnected(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(environment.api_routes.users_get_onlines)
+    .pipe(
+        tap(res => console.log('Fetched connected users', res)),
+        catchError(this.handleError)
+    );
   }
 
   private handleError(error: HttpErrorResponse) {

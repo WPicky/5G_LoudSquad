@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 const api_routes = {
-    users_get_all: 'api/users',
+    users_get_all: 'api/users_get_all',
+    users_get_onlines: 'api/users_get_onlines',
 };
 
 export const environment = {

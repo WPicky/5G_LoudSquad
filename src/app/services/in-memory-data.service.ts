@@ -4,7 +4,7 @@ import { ApiResponse } from '@models/api-response';
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
-    const users: ApiResponse = {
+    const users_get_all: ApiResponse = {
       type: 'members',
       code: 'T0004',
       descritpion: 'Liste des utilisateurs inscrits',
@@ -17,8 +17,20 @@ export class InMemoryDataService implements InMemoryDbService {
       ],
     };
 
+    const users_get_onlines: ApiResponse = {
+      type: 'members',
+      code: 'T0005',
+      descritpion: 'Liste des utilisateurs connectés',
+      payload: [
+        {id: 3, login: 'jade', status: {id: 2, name: 'Absent(e)'}},
+        {id: 4, login: 'thibault', status: {id: 1, name: 'Connecté(e)'}},
+        {id: 5, login: 'jimmy', status: {id: 2, name: 'Absent(e)'}},
+      ],
+    };
+
     return {
-      users,
+      users_get_all,
+      users_get_onlines,
     };
   }
 }
