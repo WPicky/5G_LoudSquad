@@ -8,4 +8,8 @@ export interface User {
   login: string;
   status: UserStatus;
   avatar: string;
+  last_name: string;
+  first_name: string;
+  mail: string;
+  last_connection: string;
 }

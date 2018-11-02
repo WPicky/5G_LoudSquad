@@ -1,6 +1,6 @@
 export interface ApiResponse {
   type: string;
   code: string;
-  descritpion: string;
+  description: string;
   payload: any;
 }

@@ -30,8 +30,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-  showConversation(id) {
-    console.log('go to ', id);
-    this.router.navigate(['/conversation', id]);
+  showConversation(conv) {
+    this.router.navigate(['/conversation', conv.id], { queryParams: { title: conv.label } });
   }
 }

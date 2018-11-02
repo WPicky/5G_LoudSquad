@@ -2,7 +2,7 @@
   <h3 mat-subheader>Conversations</h3>
 
   <mat-list-item *ngFor="let conversation of filteredConversations"
-                 (click)="showConversation(conversation.id)">
+                 (click)="showConversation(conversation)">
     <h4 mat-line>
       {{ conversation.label }}&nbsp;
     </h4>
