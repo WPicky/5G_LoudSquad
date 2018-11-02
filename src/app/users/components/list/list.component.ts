@@ -5,7 +5,7 @@ import { ApiResponse } from '@models/api-response';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
-    selector: 'app-list',
+    selector: 'users-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss']
 })
