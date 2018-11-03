@@ -1,0 +1,17 @@
+<nav>
+  <a routerLink="/home" routerLinkActive="active">Accueil</a>
+  <a routerLink="/login" routerLinkActive="active">Connexion</a>
+  <button (click)="logout()">Déconnexion</button>
+</nav>
+
+<aside>
+  <conversations-list></conversations-list>
+</aside>
+
+<router-outlet name="authenticatedRouter"></router-outlet>
+
+<aside>
+  <users-list-filters></users-list-filters>
+
+  <users-list></users-list>
+</aside>

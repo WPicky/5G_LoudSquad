@@ -11,6 +11,9 @@ import { SharedModule } from '@app/shared/shared.module';
 import { UsersModule } from '@app/users/users.module';
 import { CoreModule } from '@app/core/core.module';
 import { ConversationsModule } from '@app/conversations/conversations.module';
+import { AuthenticationModule } from '@app/authentication/authentication.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '@app/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,12 +26,19 @@ import { ConversationsModule } from '@app/conversations/conversations.module';
     RouterModule.forRoot(
       appRoutes,
     ),
+    AuthenticationModule,
     UsersModule,
     ConversationsModule,
     SharedModule,
     CoreModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
