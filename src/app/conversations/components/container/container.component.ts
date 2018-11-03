@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConversationsService } from '@services/conversations.service';
 import { ApiResponse } from '@models/api-response';
 import { Message } from '@models/message';
+import { Conversation } from '@models/conversation';
 
 @Component({
   selector: 'app-container',
@@ -12,6 +13,7 @@ import { Message } from '@models/message';
 export class ContainerComponent implements OnInit {
   messages: Message[];
   title: string;
+  conversation: Conversation;
 
   constructor(
       private route: ActivatedRoute,
@@ -24,8 +26,8 @@ export class ContainerComponent implements OnInit {
       this.getMessages(params.id);
     });
 
-    this.route.queryParams.subscribe(params => {
-      this.title = params.title;
+    this.conversationsService.currentConversation.subscribe(conv => {
+      this.conversation = conv;
     });
   }
 
