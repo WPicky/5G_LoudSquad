@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Conversation } from '@models/conversation';
 import { ApiResponse } from '@models/api-response';
 import { ConversationsService } from '@services/conversations.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'conversations-list',
@@ -17,6 +18,7 @@ export class ListComponent implements OnInit {
   constructor(
     private conversationService: ConversationsService,
     private router: Router,
+    private route: ActivatedRoute,
     public snackBar: MatSnackBar,
   ) { }
 
@@ -34,13 +36,12 @@ export class ListComponent implements OnInit {
       .subscribe((res: ApiResponse) => {
         this.conversationService.changeCurrentConversationsList(res.payload);
         this.filteredConversations = res.payload;
-        // this.conversations = res.payload;
       });
   }
 
   showConversation(conv) {
     this.conversationService.changeCurrentConversation(conv);
-    this.router.navigate(['/conversation', conv.id]);
+    this.router.navigate([{ outlets: { authenticatedRouter: ['conversation', conv.id] } }], {relativeTo: this.route});
   }
 
   deleteConversation(id) {
