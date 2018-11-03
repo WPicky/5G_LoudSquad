@@ -1,6 +1,8 @@
 <mat-list>
   <h3 mat-subheader>Conversations</h3>
 
+  <conversation-create-button></conversation-create-button>
+
   <mat-list-item *ngFor="let conversation of filteredConversations"
                  (click)="showConversation(conversation)">
     <h4 mat-line>
@@ -18,7 +20,8 @@
         <mat-icon>person_add</mat-icon>
         <span>Ajouter un membre</span>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item
+              (click)="deleteConversation(conversation.id)">
         <mat-icon>delete</mat-icon>
         <span>Supprimer la conversation</span>
       </button>

@@ -5,6 +5,14 @@ import { environment } from '@env/environment';
 import { catchError, tap } from 'rxjs/operators';
 import { ApiResponse } from '@models/api-response';
 
+// const httpOptions = {
+//   headers: new HttpHeaders({
+//     'Access-Control-Allow-Origin': '*',
+//     'Content-Type':  'application/json',
+//     'Authorization': 'my-auth-token'
+//   })
+// };
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,7 +35,7 @@ export class UsersService {
   getConnected(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(environment.api_routes.users_get_onlines)
     .pipe(
-        tap(res => console.log('Fetched connected users', res)),
+        // tap(res => console.log('Fetched connected users', res)),
         catchError(this.handleError)
     );
   }

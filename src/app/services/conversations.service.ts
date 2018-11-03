@@ -4,15 +4,20 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { ApiResponse } from '@models/api-response';
 import { environment } from '@env/environment';
 import { catchError, tap } from 'rxjs/operators';
+import { Conversation } from '@models/conversation';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConversationsService {
+  private conversation = new BehaviorSubject({id: null, label: '', status: ''});
+  private conversationsList = new BehaviorSubject([]);
+  currentConversation = this.conversation.asObservable();
+  currentConversationsList = this.conversationsList.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +29,22 @@ export class ConversationsService {
     );
   }
 
+  getOrCreate(data): Observable<ApiResponse> {
+    if (environment.production) {
+      return this.http.post<ApiResponse>(environment.api_routes.discussions_get_or_create, data)
+      .pipe(
+          tap(res => console.log('Fetched conversations', res)),
+          catchError(this.handleError)
+      );
+    } else {
+      return this.http.get<ApiResponse>(environment.api_routes.discussions_get_or_create)
+      .pipe(
+          tap(res => console.log('Fetched messages', res)),
+          catchError(this.handleError)
+      );
+    }
+  }
+
   getMessages(discussionId, messagesNumber): Observable<ApiResponse> {
     const params = new HttpParams().set('discussionId', discussionId).set('messagesNumber', messagesNumber);
     const options = environment.production ? {params} : {};
@@ -31,6 +52,14 @@ export class ConversationsService {
     return this.http.get<ApiResponse>(environment.api_routes.discussions_get_messages, options)
     .pipe(
         tap(res => console.log('Fetched messages', res)),
+        catchError(this.handleError)
+    );
+  }
+
+  leave(data) {
+    return this.http.post<ApiResponse>(environment.api_routes.discussions_leave, data)
+    .pipe(
+        tap(res => console.log('Discussion left', res)),
         catchError(this.handleError)
     );
   }
@@ -47,7 +76,14 @@ export class ConversationsService {
           `body was: ${error.error}`);
     }
     // return an observable with a user-facing error message
-    return throwError(
-        'Something bad happened; please try again later.');
+    return throwError('Something bad happened; please try again later.');
+  }
+
+  changeCurrentConversation(conv: Conversation) {
+    this.conversation.next(conv);
+  }
+
+  changeCurrentConversationsList(list: Conversation[]) {
+    this.conversationsList.next(list);
   }
 }

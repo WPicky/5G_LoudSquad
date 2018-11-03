@@ -41,7 +41,7 @@ export class ListComponent implements OnInit {
 
     this.getAllUsers();
 
-    setInterval(() => this.getConnectedUsers(), 2000);
+    setInterval(() => this.getConnectedUsers(), 20000);
   }
 
   getAllUsers(): void {
@@ -117,7 +117,7 @@ export class ListComponent implements OnInit {
     const newConnectedStr = newConnected.join(', ');
     const newConnectedPart = newConnected.length > 0 ? `${newConnectedStr} ${verb} désormais en ligne.` : '';
 
-    const isPlural = disconnectedNumber.length > 1;
+    const isPlural = disconnectedNumber > 1;
     const disconnectedPart = disconnectedNumber > 0 ? `${disconnectedNumber} utilisateur${isPlural ? 's' : ''} ${isPlural ? 'se sont' : 's\'est'} déconnecté${isPlural ? 's' : ''}.` : '';
 
     const message = `${newConnectedPart} ${disconnectedPart}`;
