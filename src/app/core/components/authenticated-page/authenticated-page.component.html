@@ -1,14 +1,8 @@
-<div mat-fab
-     matRipple
-     [matRippleColor]="'#f44336'"
-     [matRippleCentered]="true"
-     class="heartbeat">
-  <mat-icon color="warn">favorite</mat-icon>
-</div>
+<app-heartbeat></app-heartbeat>
 
 <h1>Bienvenue {{ user.firstname }} !</h1>
 
-<button (click)="logout()">Se déconnecter</button>
+<app-logout-button></app-logout-button>
 
 <aside>
   <conversations-list></conversations-list>

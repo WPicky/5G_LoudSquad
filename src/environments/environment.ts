@@ -9,6 +9,7 @@ const apiUrl = `${backendUrl}/restapi`;
 const api_routes = {
   register: `${authUrl}/register`,
   login: `${authUrl}/login`,
+  logout: `${apiUrl}/logout`,
   heartbeat: `${apiUrl}/client-heart-beat`,
   users_get_all: `${apiUrl}/members/get-all`,
   users_get_onlines: `${apiUrl}/members/get-onlines`,
