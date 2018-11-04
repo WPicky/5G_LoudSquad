@@ -1,8 +1,14 @@
-<nav>
-  <a routerLink="/home" routerLinkActive="active">Accueil</a>
-  <a routerLink="/login" routerLinkActive="active">Connexion</a>
-  <button (click)="logout()">Déconnexion</button>
-</nav>
+<div mat-fab
+     matRipple
+     [matRippleColor]="'#f44336'"
+     [matRippleCentered]="true"
+     class="heartbeat">
+  <mat-icon color="warn">favorite</mat-icon>
+</div>
+
+<h1>Bienvenue {{ user.firstname }} !</h1>
+
+<button (click)="logout()">Se déconnecter</button>
 
 <aside>
   <conversations-list></conversations-list>

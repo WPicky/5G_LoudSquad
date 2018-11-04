@@ -6,6 +6,7 @@ import { catchError, shareReplay, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { Router } from '@angular/router';
+import { UsersService } from '@services/users.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,17 @@ export class AuthenticationService {
 
   constructor(
       private http: HttpClient,
-      private router: Router
+      private router: Router,
+      private usersService: UsersService,
   ) {}
+
+  heartBeat() {
+    return this.http.post<ApiResponse>(environment.api_routes.heartbeat, {})
+    .pipe(
+        tap(res => console.log('Boum boum', res)),
+        catchError(this.handleError),
+    );
+  }
 
   login(login: string, password: string) {
     return this.http.post<ApiResponse>(environment.api_routes.login, {login, password})
@@ -28,12 +38,16 @@ export class AuthenticationService {
 
   private setSession(authResult) {
     const token = authResult.payload.token;
+    const user = authResult.payload.user;
 
     localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    this.usersService.changeLoggedInUser(user);
   }
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.router.navigateByUrl(environment.front_routes.login);
   }
 
