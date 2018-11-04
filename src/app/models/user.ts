@@ -10,7 +10,7 @@ export interface User {
   avatar: string;
   lastname: string;
   firstname: string;
-  mail?: string;
+  email?: string;
   lastConnectionDate?: string;
   isAdmin?: boolean;
 }

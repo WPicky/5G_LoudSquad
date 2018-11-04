@@ -4,14 +4,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { environment } from '@env/environment';
 import { catchError, tap } from 'rxjs/operators';
 import { ApiResponse } from '@models/api-response';
-
-// const httpOptions = {
-//   headers: new HttpHeaders({
-//     'Access-Control-Allow-Origin': '*',
-//     'Content-Type':  'application/json',
-//     'Authorization': 'my-auth-token'
-//   })
-// };
+import { User, UserStatus } from '@models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +12,17 @@ import { ApiResponse } from '@models/api-response';
 export class UsersService {
   private selectedStatuses = new BehaviorSubject([]);
   private searchedLogin = new BehaviorSubject('');
+  private loggedInUser = new BehaviorSubject({
+    id: null,
+    login: '',
+    status: null,
+    avatar: '',
+    lastname: '',
+    firstname: '',
+  });
   currentSelectedStatuses = this.selectedStatuses.asObservable();
   currentSearchedLogin = this.searchedLogin.asObservable();
+  currentLoggedInUser = this.loggedInUser.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -38,6 +40,10 @@ export class UsersService {
         // tap(res => console.log('Fetched connected users', res)),
         catchError(this.handleError)
     );
+  }
+
+  getLoggedIn() {
+    return JSON.parse(localStorage.getItem('user'));
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -62,5 +68,9 @@ export class UsersService {
 
   changeSearchedLogin(login: string) {
     this.searchedLogin.next(login);
+  }
+
+  changeLoggedInUser(user) {
+    this.loggedInUser.next(user);
   }
 }
