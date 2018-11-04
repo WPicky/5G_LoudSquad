@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { ApiResponse } from '@models/api-response';
-import { catchError, shareReplay, tap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { catchError, shareReplay, tap, timeout } from 'rxjs/operators';
+import { throwError, TimeoutError } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { Router } from '@angular/router';
 import { UsersService } from '@services/users.service';
@@ -22,6 +22,7 @@ export class AuthenticationService {
   heartBeat() {
     return this.http.post<ApiResponse>(environment.api_routes.heartbeat, {})
     .pipe(
+        timeout(10000),
         tap(res => console.log('Boum boum', res)),
         catchError(this.handleError),
     );
@@ -46,9 +47,15 @@ export class AuthenticationService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    this.router.navigateByUrl(environment.front_routes.login);
+    return this.http.post<ApiResponse>(environment.api_routes.logout, {})
+      .pipe(
+        tap(res => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          this.router.navigateByUrl(environment.front_routes.login);
+        }),
+        catchError(this.handleError),
+      );
   }
 
   public isLoggedIn() {
@@ -91,6 +98,10 @@ export class AuthenticationService {
   }
 
   private handleError(error: HttpErrorResponse) {
+    if (error.name === 'TimeoutError') {
+      return throwError('Le serveur met trop de temps à répondre, veuillez vérifier votre connexion');
+    }
+
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);

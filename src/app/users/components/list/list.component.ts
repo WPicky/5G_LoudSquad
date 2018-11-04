@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UsersService } from '../../../services/users.service';
 import { User, UserStatus } from '../../../models/user';
 import { ApiResponse } from '@models/api-response';
@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material';
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy {
   users: User[];
   filteredUsers: User[];
   usersFilters = {
@@ -17,6 +17,7 @@ export class ListComponent implements OnInit {
     status: [],
   };
   statusColor: Object;
+  getOnlinesInterval;
 
   constructor(
       private usersService: UsersService,
@@ -41,7 +42,11 @@ export class ListComponent implements OnInit {
 
     this.getAllUsers();
 
-    setInterval(() => this.getConnectedUsers(), 20000);
+    this.getOnlinesInterval = setInterval(() => this.getConnectedUsers(), 20000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.getOnlinesInterval);
   }
 
   getAllUsers(): void {
@@ -129,7 +134,7 @@ export class ListComponent implements OnInit {
 
   showConnectedInfosMessage(message) {
     this.snackBar.open(message, '', {
-      duration: 2000,
+      duration: 4000,
     });
   }
 }
