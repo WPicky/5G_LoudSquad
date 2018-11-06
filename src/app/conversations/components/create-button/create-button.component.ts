@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConversationsService } from '@services/conversations.service';
 import { ApiResponse } from '@models/api-response';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { CreateModalComponent } from '@app/conversations/components/create-modal/create-modal.component';
 import { Conversation } from '@models/conversation';
 
@@ -21,6 +21,7 @@ export class CreateButtonComponent implements OnInit {
   constructor(
     private conversationsService: ConversationsService,
     public dialog: MatDialog,
+    public snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -40,25 +41,38 @@ export class CreateButtonComponent implements OnInit {
   }
 
   createConversation(data) {
+    let membersIds = [];
+    let membersNames = '';
+    if (data.members) {
+      membersIds = data.members.map(member => member.id);
+      membersNames = data.members.map(member => member.firstname).join(', ');
+    }
+
     const postData = {
       discussionId: null,
-      discussionName: data.label || null,
-      members: data.members || null,
+      discussionName: data.label || `Discussion avec ${membersNames}`,
+      members: membersIds,
     };
 
     this.conversationsService.getOrCreate(postData)
       .subscribe((res) => {
-        this.conversationsService.changeCurrentConversation(res.payload);
+        if (res.code === 'T0007') {
+          this.conversationsService.changeCurrentConversation(res.payload);
+          this.newList = [res.payload];
 
-        this.newList = [res.payload];
-
-        this.conversationsService.currentConversationsList.subscribe(list => {
-          this.newList = this.newList.concat(list);
-        });
-
-        console.log('send new list', this.newList)
-
-        this.conversationsService.changeCurrentConversationsList(this.newList);
+          this.conversationsService.currentConversationsList.subscribe(list => {
+            this.newList = this.newList.concat(list);
+          });
+          this.conversationsService.changeCurrentConversationsList(this.newList);
+        } else if (res.code === 'E0004' || res.code === 'E0005') {
+          this.showError(res.description);
+        }
       });
+  }
+
+  private showError(message) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+    });
   }
 }

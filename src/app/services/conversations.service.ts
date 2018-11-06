@@ -30,19 +30,11 @@ export class ConversationsService {
   }
 
   getOrCreate(data): Observable<ApiResponse> {
-    if (environment.production) {
-      return this.http.post<ApiResponse>(environment.api_routes.discussions_get_or_create, data)
-      .pipe(
-          tap(res => console.log('Fetched conversations', res)),
-          catchError(this.handleError)
-      );
-    } else {
-      return this.http.get<ApiResponse>(environment.api_routes.discussions_get_or_create)
-      .pipe(
-          tap(res => console.log('Fetched messages', res)),
-          catchError(this.handleError)
-      );
-    }
+    return this.http.post<ApiResponse>(environment.api_routes.discussions_get_or_create, data)
+    .pipe(
+        tap(res => console.log('Fetched conversations', res)),
+        catchError(this.handleError)
+    );
   }
 
   getMessages(discussionId, messagesNumber): Observable<ApiResponse> {

@@ -16,7 +16,7 @@ export class ListComponent implements OnInit {
   filteredConversations: Conversation[];
 
   constructor(
-    private conversationService: ConversationsService,
+    private conversationsService: ConversationsService,
     private router: Router,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar,
@@ -25,23 +25,38 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.getAllConversations();
 
-    this.conversationService.currentConversationsList.subscribe(list => {
+    this.conversationsService.currentConversationsList.subscribe(list => {
       this.conversations = list;
       this.filteredConversations = list;
     });
   }
 
   getAllConversations(): void {
-    this.conversationService.getAll()
+    this.conversationsService.getAll()
       .subscribe((res: ApiResponse) => {
-        this.conversationService.changeCurrentConversationsList(res.payload);
+        this.conversationsService.changeCurrentConversationsList(res.payload);
         this.filteredConversations = res.payload;
       });
   }
 
   showConversation(conv) {
-    this.conversationService.changeCurrentConversation(conv);
-    this.router.navigate([{ outlets: { authenticatedRouter: ['conversation', conv.id] } }], {relativeTo: this.route});
+    const membersIds = conv.members.map(member => member.id);
+
+    const postData = {
+      discussionId: conv.id,
+      discussionName: conv.label,
+      members: membersIds,
+    };
+
+    // Get de la conversation cliquée
+    this.conversationsService.getOrCreate(postData)
+      .subscribe((res) => {
+        this.conversationsService.changeCurrentConversation(res.payload);
+        this.router.navigate(
+          [{ outlets: { authenticatedRouter: ['conversation', conv.id] } }],
+          {relativeTo: this.route},
+        );
+      });
   }
 
   deleteConversation(id) {
@@ -49,7 +64,7 @@ export class ListComponent implements OnInit {
       discussionId: id,
       force: true,
     };
-    this.conversationService.leave(data)
+    this.conversationsService.leave(data)
       .subscribe((res: ApiResponse) => {
         console.log(res);
         this.snackBar.open(res.description, '', {

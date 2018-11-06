@@ -12,7 +12,7 @@
                 [(ngModel)]="data.conv.members"
                 multiple>
       <mat-option *ngFor="let user of usersList"
-                  [value]="user.login">
+                  [value]="user">
         {{ user.login }}
       </mat-option>
     </mat-select>
