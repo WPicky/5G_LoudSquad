@@ -16,7 +16,8 @@
     </button>
 
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item
+              (click)="openAddMemberModal(conversation)">
         <mat-icon>person_add</mat-icon>
         <span>Ajouter un membre</span>
       </button>

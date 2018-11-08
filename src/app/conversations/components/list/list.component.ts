@@ -3,8 +3,10 @@ import { Conversation } from '@models/conversation';
 import { ApiResponse } from '@models/api-response';
 import { ConversationsService } from '@services/conversations.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { environment } from '@env/environment';
+import { CreateModalComponent } from '@app/conversations/components/create-modal/create-modal.component';
+import { AddMemberModalComponent } from '@app/conversations/components/add-member-modal/add-member-modal.component';
 
 @Component({
   selector: 'conversations-list',
@@ -20,6 +22,7 @@ export class ListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -71,5 +74,18 @@ export class ListComponent implements OnInit {
           duration: 3000,
         });
       });
+  }
+
+  openAddMemberModal(conv): void {
+    const dialogRef = this.dialog.open(AddMemberModalComponent, {
+      width: '250px',
+      data: {conv},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // this.createConversation(result);
+      }
+    });
   }
 }

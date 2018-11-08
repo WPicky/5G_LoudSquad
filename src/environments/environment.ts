@@ -17,6 +17,7 @@ const api_routes = {
   discussions_get_messages: `${apiUrl}/discussions/get-messages`,
   discussions_get_or_create: `${apiUrl}/discussions/get-or-create`,
   discussions_leave: `${apiUrl}/discussions/leave`,
+  discussions_add_members: `${apiUrl}/discussions/add-member`,
 };
 
 const front_routes = {

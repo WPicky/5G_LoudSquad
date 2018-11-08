@@ -56,6 +56,14 @@ export class ConversationsService {
     );
   }
 
+  addMembers(data) {
+    return this.http.post<ApiResponse>(environment.api_routes.discussions_add_members, data)
+    .pipe(
+        tap(res => console.log('Added members', res)),
+        catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

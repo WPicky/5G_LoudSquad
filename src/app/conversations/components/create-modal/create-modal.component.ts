@@ -15,15 +15,15 @@ import { UsersService } from '@services/users.service';
 export class CreateModalComponent implements OnInit {
   usersList: User[];
 
+  ngOnInit() {
+    this.getAllUsers();
+  }
+
   constructor(
       public dialogRef: MatDialogRef<CreateButtonComponent>,
       @Inject(MAT_DIALOG_DATA) public data: CreateConversationModalData,
       private usersService: UsersService,
   ) {}
-
-  ngOnInit() {
-    this.getAllUsers();
-  }
 
   getAllUsers(): void {
     this.usersService.getAll()
