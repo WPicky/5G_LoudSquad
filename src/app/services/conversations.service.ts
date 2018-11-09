@@ -32,7 +32,7 @@ export class ConversationsService {
   getOrCreate(data): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(environment.api_routes.discussions_get_or_create, data)
     .pipe(
-        tap(res => console.log('Fetched conversations', res)),
+        tap(res => console.log('Get or created conversation', res)),
         catchError(this.handleError)
     );
   }
