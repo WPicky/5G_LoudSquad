@@ -1,0 +1,17 @@
+<app-heartbeat></app-heartbeat>
+
+<h1>Bienvenue {{ user.firstname }} !</h1>
+
+<app-logout-button></app-logout-button>
+
+<aside>
+  <conversations-list></conversations-list>
+</aside>
+
+<router-outlet name="authenticatedRouter"></router-outlet>
+
+<aside>
+  <users-list-filters></users-list-filters>
+
+  <users-list></users-list>
+</aside>

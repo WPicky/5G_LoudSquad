@@ -2,8 +2,33 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const backendUrl = 'http://fake-backend.test';
+const authUrl = `${backendUrl}/api`;
+const apiUrl = `${backendUrl}/restapi`;
+
+const api_routes = {
+  register: `${authUrl}/register`,
+  login: `${authUrl}/login`,
+  logout: `${apiUrl}/logout`,
+  heartbeat: `${apiUrl}/client-heart-beat`,
+  users_get_all: `${apiUrl}/members/get-all`,
+  users_get_onlines: `${apiUrl}/members/get-onlines`,
+  discussions_list: `${apiUrl}/discussions/list`,
+  discussions_get_messages: `${apiUrl}/discussions/get-messages`,
+  discussions_get_or_create: `${apiUrl}/discussions/get-or-create`,
+  discussions_leave: `${apiUrl}/discussions/leave`,
+  discussions_add_members: `${apiUrl}/discussions/add-member`,
+};
+
+const front_routes = {
+  conversation: 'conversation',
+  login: '/auth/login',
+};
+
 export const environment = {
-  production: false
+  production: false,
+  api_routes,
+  front_routes,
 };
 
 /*
