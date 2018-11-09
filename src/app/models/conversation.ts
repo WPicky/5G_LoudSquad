@@ -3,4 +3,5 @@ export interface Conversation {
   label: string;
   status: string;
   lastMessages?: Array<any>;
+  members?: Array<any>;
 }
