@@ -42,7 +42,7 @@ export class ListComponent implements OnInit {
       });
   }
 
-  showConversation(conv) {
+  showConversation(conv): void {
     const membersIds = conv.members.map(member => member.id);
 
     const postData = {
@@ -62,17 +62,19 @@ export class ListComponent implements OnInit {
       });
   }
 
-  deleteConversation(id) {
+  leaveOrDeleteConv(conv): void {
     const data = {
-      discussionId: id,
-      force: true,
+      discussionId: conv,
+      force: conv.status === 'creator',
     };
     this.conversationsService.leave(data)
       .subscribe((res: ApiResponse) => {
-        console.log(res);
-        this.snackBar.open(res.description, '', {
-          duration: 3000,
-        });
+        if (res.code === 'T0010') {
+          this.showSnack(res.description);
+          this.getAllConversations();
+        } else if (res.code === 'E0007' || res.code === 'E0008') {
+          this.showSnack(res.description);
+        }
       });
   }
 
@@ -81,11 +83,11 @@ export class ListComponent implements OnInit {
       width: '250px',
       data: {conv},
     });
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // this.createConversation(result);
-      }
+  private showSnack(message) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
     });
   }
 }
