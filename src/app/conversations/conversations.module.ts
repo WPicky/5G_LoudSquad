@@ -6,6 +6,7 @@ import { ContainerComponent } from './components/container/container.component';
 import { CreateButtonComponent } from './components/create-button/create-button.component';
 import { CreateModalComponent } from './components/create-modal/create-modal.component';
 import { AddMemberModalComponent } from './components/add-member-modal/add-member-modal.component';
+import { PostMessageFormComponent } from './components/post-message-form/post-message-form.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { AddMemberModalComponent } from './components/add-member-modal/add-membe
     CreateButtonComponent,
     CreateModalComponent,
     AddMemberModalComponent,
+    PostMessageFormComponent,
   ],
   exports: [
     ListComponent,

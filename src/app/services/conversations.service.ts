@@ -64,6 +64,14 @@ export class ConversationsService {
     );
   }
 
+  postMessage(data) {
+    return this.http.post<ApiResponse>(environment.api_routes.discussions_post_message, data)
+    .pipe(
+        tap(res => console.log('Message posted', res)),
+        catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
