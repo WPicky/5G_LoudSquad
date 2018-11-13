@@ -38,12 +38,12 @@ export class ConversationsService {
   }
 
   getMessages(discussionId, messagesNumber): Observable<ApiResponse> {
-    const params = new HttpParams().set('discussionId', discussionId).set('messagesNumber', messagesNumber);
+    const params = new HttpParams().set('messagesNumber', messagesNumber);
     const options = environment.production ? {params} : {};
 
-    return this.http.get<ApiResponse>(environment.api_routes.discussions_get_messages, options)
+    return this.http.get<ApiResponse>(`${environment.api_routes.discussions_get_messages}/${discussionId}`, options)
     .pipe(
-        tap(res => console.log('Fetched messages', res)),
+        // tap(res => console.log('Fetched messages', res)),
         catchError(this.handleError)
     );
   }

@@ -8,11 +8,10 @@ import { Conversation } from '@models/conversation';
 @Component({
   selector: 'app-container',
   templateUrl: './container.component.html',
-  styleUrls: ['./container.component.css']
+  styleUrls: ['./container.component.scss']
 })
 export class ContainerComponent implements OnInit {
   messages: Message[];
-  title: string;
   conversation: Conversation;
 
   constructor(
@@ -23,7 +22,7 @@ export class ContainerComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.getMessages(params.id);
+      this.getConversation(params.id);
     });
 
     this.conversationsService.currentConversation.subscribe(conv => {
@@ -31,10 +30,16 @@ export class ContainerComponent implements OnInit {
     });
   }
 
-  getMessages(conversationId): void {
-    this.conversationsService.getMessages(conversationId, 30)
-      .subscribe((res: ApiResponse) => {
-        this.messages = res.payload;
+  getConversation(id): void {
+    const data = {
+      discussionId: id,
+      discussionName: null,
+      members: [],
+    };
+
+    this.conversationsService.getOrCreate(data)
+      .subscribe( (res: ApiResponse) => {
+        this.conversationsService.changeCurrentConversation(res.payload);
       });
   }
 }

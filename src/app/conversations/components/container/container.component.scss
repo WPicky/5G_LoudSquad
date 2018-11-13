@@ -1,0 +1,17 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  h3 {
+    flex-basis: 10%;
+  }
+
+  conversation-messages-list {
+    flex-grow: 1;
+  }
+
+  conversation-post-message-form {
+    flex-basis: 10%;
+  }
+}

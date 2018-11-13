@@ -17,7 +17,7 @@ export const appRoutes: Routes = [
     component: AuthenticatedPageComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', component: ContainerComponent, outlet: 'authenticatedRouter' },
+      { path: '', component: NotFoundPageComponent, outlet: 'authenticatedRouter' },
       { path: 'conversation/:id', component: ContainerComponent, outlet: 'authenticatedRouter' },
     ],
   },

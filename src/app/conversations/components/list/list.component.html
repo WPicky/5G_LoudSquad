@@ -1,7 +1,9 @@
 <mat-list>
   <h3 mat-subheader>Conversations</h3>
 
-  <conversation-create-button></conversation-create-button>
+  <mat-list-item>
+    <conversation-create-button></conversation-create-button>
+  </mat-list-item>
 
   <mat-list-item *ngFor="let conversation of filteredConversations"
                  (click)="showConversation(conversation)">
