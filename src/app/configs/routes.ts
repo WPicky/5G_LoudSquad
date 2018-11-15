@@ -4,6 +4,7 @@ import { ContainerComponent } from '@app/conversations/components/container/cont
 import { LoginPageComponent } from '@app/authentication/components/login-page/login-page.component';
 import { AuthGuard } from '@app/guards/auth.guard';
 import { AuthenticatedPageComponent } from '@app/core/components/authenticated-page/authenticated-page.component';
+import {HomePageComponent} from '@app/core/components/home-page/home-page.component';
 
 export const appRoutes: Routes = [
   {
@@ -17,7 +18,7 @@ export const appRoutes: Routes = [
     component: AuthenticatedPageComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', component: ContainerComponent, outlet: 'authenticatedRouter' },
+      { path: '', component: HomePageComponent, outlet: 'authenticatedRouter' },
       { path: 'conversation/:id', component: ContainerComponent, outlet: 'authenticatedRouter' },
     ],
   },

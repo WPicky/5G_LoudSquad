@@ -7,6 +7,7 @@ import { SharedModule } from '@app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from '@app/configs/routes';
 import { AuthenticationModule } from '@app/authentication/authentication.module';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { AuthenticationModule } from '@app/authentication/authentication.module'
   ],
   declarations: [
     AuthenticatedPageComponent,
+    HomePageComponent,
   ],
 })
 export class CoreModule { }
