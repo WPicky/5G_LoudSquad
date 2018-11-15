@@ -11,6 +11,7 @@ html, body {
   z-index: -2;
 }
 
+
 #display {
   color: white;
   font-size: 2.9em;
@@ -71,18 +72,30 @@ span {
 
 #content {
   height: 45em;
-} p {
+}
+
+p, h1 {
     max-width: 30em;
     color: white;
-    font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+    font-family: "pt";
+    font-style: italic;
     letter-spacing:0.1em;
     text-align:center;
     margin: 40px auto;
-    text-transform: lowercase;
     line-height: 145%;
     font-size: 2em;
-    font-variant: small-caps;
+
   }
+
+h1 {
+  font-family: "Rubik", bold, serif;
+}
+
+#author {
+  font-size: 1em;
+  font-family: "pt", normal;
+  color : lightgrey;
+}
 
 p :hover {
   text-decoration: none;
