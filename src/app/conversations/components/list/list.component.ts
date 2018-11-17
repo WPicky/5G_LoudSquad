@@ -43,8 +43,13 @@ export class ListComponent implements OnInit {
   }
 
   showConversation(conv): void {
-    const membersIds = conv.members.map(member => member.id);
+    this.conversationsService.changeCurrentConversation(null);
+    this.router.navigate(
+        [{ outlets: { authenticatedRouter: ['conversation', conv.id] } }],
+        {relativeTo: this.route},
+    );
 
+    const membersIds = conv.members.map(member => member.id);
     const postData = {
       discussionId: conv.id,
       discussionName: conv.label,
@@ -55,10 +60,6 @@ export class ListComponent implements OnInit {
     this.conversationsService.getOrCreate(postData)
       .subscribe((res) => {
         this.conversationsService.changeCurrentConversation(res.payload);
-        this.router.navigate(
-          [{ outlets: { authenticatedRouter: ['conversation', conv.id] } }],
-          {relativeTo: this.route},
-        );
       });
   }
 
@@ -80,7 +81,6 @@ export class ListComponent implements OnInit {
 
   openAddMemberModal(conv): void {
     const dialogRef = this.dialog.open(AddMemberModalComponent, {
-      width: '250px',
       data: {conv},
     });
   }

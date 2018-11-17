@@ -1,4 +1,10 @@
-<div class="content">
+<div *ngIf="!conversation"
+     class="spinner">
+  <app-spinner [color]="'black'">
+  </app-spinner>
+</div>
+
+<div *ngIf="conversation" class="content">
   <h1>{{ conversation.label }}</h1>
 
   <conversation-messages-list [conversationId]="conversation.id"></conversation-messages-list>

@@ -14,7 +14,7 @@ import { Conversation } from '@models/conversation';
   providedIn: 'root'
 })
 export class ConversationsService {
-  private conversation = new BehaviorSubject({id: null, label: '', status: ''});
+  private conversation = new BehaviorSubject(null);
   private conversationsList = new BehaviorSubject([]);
   private previewMessage = new BehaviorSubject('');
   currentConversation = this.conversation.asObservable();
