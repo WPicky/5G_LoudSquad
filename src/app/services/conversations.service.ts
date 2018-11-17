@@ -16,8 +16,10 @@ import { Conversation } from '@models/conversation';
 export class ConversationsService {
   private conversation = new BehaviorSubject({id: null, label: '', status: ''});
   private conversationsList = new BehaviorSubject([]);
+  private previewMessage = new BehaviorSubject('');
   currentConversation = this.conversation.asObservable();
   currentConversationsList = this.conversationsList.asObservable();
+  currentPreviewMessage = this.previewMessage.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -38,12 +40,12 @@ export class ConversationsService {
   }
 
   getMessages(discussionId, messagesNumber): Observable<ApiResponse> {
-    const params = new HttpParams().set('discussionId', discussionId).set('messagesNumber', messagesNumber);
+    const params = new HttpParams().set('messagesNumber', messagesNumber);
     const options = environment.production ? {params} : {};
 
-    return this.http.get<ApiResponse>(environment.api_routes.discussions_get_messages, options)
+    return this.http.get<ApiResponse>(`${environment.api_routes.discussions_get_messages}/${discussionId}`, options)
     .pipe(
-        tap(res => console.log('Fetched messages', res)),
+        // tap(res => console.log('Fetched messages', res)),
         catchError(this.handleError)
     );
   }
@@ -60,6 +62,14 @@ export class ConversationsService {
     return this.http.post<ApiResponse>(environment.api_routes.discussions_add_members, data)
     .pipe(
         tap(res => console.log('Added members', res)),
+        catchError(this.handleError)
+    );
+  }
+
+  postMessage(data) {
+    return this.http.post<ApiResponse>(environment.api_routes.discussions_post_message, data)
+    .pipe(
+        tap(res => console.log('Message posted', res)),
         catchError(this.handleError)
     );
   }
@@ -85,5 +95,9 @@ export class ConversationsService {
 
   changeCurrentConversationsList(list: Conversation[]) {
     this.conversationsList.next(list);
+  }
+
+  changeCurrentPreviewMessage(message: string) {
+    this.previewMessage.next(message);
   }
 }

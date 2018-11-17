@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from '@services/in-memory-data.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AngularMaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    SpinnerComponent,
   ],
-  declarations: []
+  declarations: [
+      SpinnerComponent,
+  ],
 })
 export class SharedModule { }

@@ -1,7 +1,9 @@
 <mat-list>
   <h3 mat-subheader>Conversations</h3>
 
-  <conversation-create-button></conversation-create-button>
+  <mat-list-item>
+    <conversation-create-button></conversation-create-button>
+  </mat-list-item>
 
   <mat-list-item *ngFor="let conversation of filteredConversations"
                  (click)="showConversation(conversation)">
@@ -25,15 +27,15 @@
       <button mat-menu-item
               (click)="leaveOrDeleteConv(conversation)">
 
-        <div *ngIf="conversation.status === 'creator'">
+        <span *ngIf="conversation.status === 'creator'">
           <mat-icon>delete</mat-icon>
           <span>Supprimer la conversation</span>
-        </div>
+        </span>
 
-        <div *ngIf="conversation.status === 'member'">
+        <span *ngIf="conversation.status === 'member'">
           <mat-icon>close</mat-icon>
           <span>Quitter la conversation</span>
-        </div>
+        </span>
       </button>
     </mat-menu>
   </mat-list-item>

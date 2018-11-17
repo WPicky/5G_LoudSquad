@@ -4,7 +4,7 @@ import { ContainerComponent } from '@app/conversations/components/container/cont
 import { LoginPageComponent } from '@app/authentication/components/login-page/login-page.component';
 import { AuthGuard } from '@app/guards/auth.guard';
 import { AuthenticatedPageComponent } from '@app/core/components/authenticated-page/authenticated-page.component';
-import {HomePageComponent} from '@app/core/components/home-page/home-page.component';
+import { HomePageComponent } from '@app/core/components/home-page/home-page.component';
 
 export const appRoutes: Routes = [
   {

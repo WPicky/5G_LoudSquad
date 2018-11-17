@@ -1,1 +1,7 @@
-<h3>{{ conversation.label }}</h3>
+<div class="content">
+  <h3>{{ conversation.label }}</h3>
+
+  <conversation-messages-list [conversationId]="conversation.id"></conversation-messages-list>
+
+  <conversation-post-message-form [conversationId]="conversation.id"></conversation-post-message-form>
+</div>

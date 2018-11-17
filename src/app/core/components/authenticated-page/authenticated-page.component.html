@@ -1,17 +1,33 @@
-<app-heartbeat></app-heartbeat>
+<div class="content">
+  <aside>
+    <conversations-list></conversations-list>
+  </aside>
 
-<h1>Bienvenue {{ user.firstname }} !</h1>
+  <div class="center">
+    <router-outlet name="authenticatedRouter"></router-outlet>
+  </div>
 
-<app-logout-button></app-logout-button>
+  <aside>
+    <mat-list>
+      <mat-list-item>
+        <img matListAvatar
+             [src]="user.avatar"
+             [matMenuTriggerFor]="menu">
 
-<aside>
-  <conversations-list></conversations-list>
-</aside>
+        <h3 mat-line>{{ user.firstname }}&nbsp;{{ user.lastname }}</h3>
 
-<router-outlet name="authenticatedRouter"></router-outlet>
+        <app-heartbeat></app-heartbeat>
+      </mat-list-item>
 
-<aside>
-  <users-list-filters></users-list-filters>
+      <mat-divider></mat-divider>
+    </mat-list>
 
-  <users-list></users-list>
-</aside>
+    <mat-menu #menu="matMenu">
+      <app-logout-button></app-logout-button>
+    </mat-menu>
+
+    <users-list-filters></users-list-filters>
+
+    <users-list></users-list>
+  </aside>
+</div>

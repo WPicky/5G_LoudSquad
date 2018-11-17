@@ -11,7 +11,7 @@ import { AddMemberModalComponent } from '@app/conversations/components/add-membe
 @Component({
   selector: 'conversations-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
   conversations: Conversation[];
