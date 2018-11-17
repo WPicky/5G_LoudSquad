@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css']
+  styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
   citation;
@@ -161,11 +161,15 @@ export class HomePageComponent implements OnInit {
     m = this.checkTime(m);
 
     document.getElementById('display').innerHTML = h + ':' + m + ampm;
-    const t = setTimeout(function() {this.startTime()}, 500);
+    const t = setTimeout(function() {
+      // this.startTime();
+    }, 500);
   }
 
   checkTime(i) {
-    if (i < 10) {i = '0' + i };  // add zero in front of numbers < 10
+    if (i < 10) {
+      i = '0' + i;
+    }
     return i;
   }
 

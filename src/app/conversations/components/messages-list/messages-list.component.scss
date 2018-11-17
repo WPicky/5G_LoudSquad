@@ -1,6 +1,7 @@
 .messages-list {
   display: flex;
   flex-direction: column;
+  position: relative;
 
   .message-container {
     width: auto;
@@ -8,13 +9,25 @@
     padding: .1rem .5rem;
     margin-bottom: 5px;
 
+    .content {
+      padding: .1rem .5rem;
+      border-radius: 5px;
+    }
+
     &.left {
       align-self: flex-start;
+
+      .content {
+        background: #00b894;
+      }
     }
 
     &.right {
       align-self: flex-end;
-      background: blueviolet;
+
+      .content {
+        background: #ff7675;
+      }
     }
 
     &.preview-message {

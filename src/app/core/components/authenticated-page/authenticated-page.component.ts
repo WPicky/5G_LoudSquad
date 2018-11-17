@@ -11,6 +11,8 @@ import { MatRipple, MatSnackBar } from '@angular/material';
 })
 export class AuthenticatedPageComponent implements OnInit {
   user: User;
+  randomBackground: string;
+  randomHomeBtn: string;
 
   constructor(
     private authService: AuthenticationService,
@@ -23,5 +25,12 @@ export class AuthenticatedPageComponent implements OnInit {
     });
 
     this.usersService.changeLoggedInUser(this.usersService.getLoggedIn());
+
+    this.randomBackground = `url(/src/assets/img/pusheen/${this.getRdmPusheen()}.png)`;
+    this.randomHomeBtn = `/src/assets/img/pusheen/${this.getRdmPusheen()}.png`;
+  }
+
+  getRdmPusheen(): number {
+    return Math.ceil(Math.random() * 9);
   }
 }

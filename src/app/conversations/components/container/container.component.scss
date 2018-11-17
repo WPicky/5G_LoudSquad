@@ -2,13 +2,17 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
 
-  h3 {
+  h1 {
     flex-basis: 10%;
+    align-content: center;
   }
 
   conversation-messages-list {
     flex-grow: 1;
+    overflow-y: auto;
   }
 
   conversation-post-message-form {
