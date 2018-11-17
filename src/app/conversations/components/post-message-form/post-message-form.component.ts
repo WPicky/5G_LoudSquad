@@ -24,18 +24,19 @@ export class PostMessageFormComponent {
       message: this.message,
     };
 
+    this.message = '';
+
     this.conversationsService.postMessage(data)
     .subscribe((res) => {
-      if (res.code === 'T0012') {
-        this.message = '';
-      } else if (res.code === 'E0009') {
+      if (res.code === 'E0009') {
         this.showSnack(res.description);
+        this.conversationsService.changeCurrentPreviewMessage('');
       }
     });
   }
 
   private postPreviewMessage() {
-
+    this.conversationsService.changeCurrentPreviewMessage(this.message);
   }
 
   private showSnack(message) {

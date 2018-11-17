@@ -16,8 +16,10 @@ import { Conversation } from '@models/conversation';
 export class ConversationsService {
   private conversation = new BehaviorSubject({id: null, label: '', status: ''});
   private conversationsList = new BehaviorSubject([]);
+  private previewMessage = new BehaviorSubject('');
   currentConversation = this.conversation.asObservable();
   currentConversationsList = this.conversationsList.asObservable();
+  currentPreviewMessage = this.previewMessage.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -93,5 +95,9 @@ export class ConversationsService {
 
   changeCurrentConversationsList(list: Conversation[]) {
     this.conversationsList.next(list);
+  }
+
+  changeCurrentPreviewMessage(message: string) {
+    this.previewMessage.next(message);
   }
 }
