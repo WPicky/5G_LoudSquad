@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css']
+  styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
   citation;
@@ -129,7 +129,9 @@ export class HomePageComponent implements OnInit {
     {quote: 'Mon p\'tit guide médical !', author: ''},
     {quote: 'You know nothing Jon Snow.', author: ''},
   ];
-  days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+  date: string;
+  time: string;
 
   constructor() {
   }
@@ -140,6 +142,9 @@ export class HomePageComponent implements OnInit {
     setInterval(() => {
       this.display();
     } , 20000);
+
+    this.startDate();
+    this.startTime();
   }
 
   display() {
@@ -159,20 +164,24 @@ export class HomePageComponent implements OnInit {
     const s = today.getSeconds();
     const ampm = '';
     m = this.checkTime(m);
+    this.time = h + ':' + m + ampm;
 
-    document.getElementById('display').innerHTML = h + ':' + m + ampm;
-    const t = setTimeout(function() {this.startTime()}, 500);
+    const t = setTimeout(() => {
+      this.startTime();
+    }, 1000);
   }
 
   checkTime(i) {
-    if (i < 10) {i = '0' + i };  // add zero in front of numbers < 10
+    if (i < 10) {
+      i = '0' + i;
+    }
     return i;
   }
 
 
   startDate() {
     const d = new Date();
-    document.getElementById('date').innerHTML = this.days[d.getDay()] + ' | ' + [d.getMonth() + 1] + '/' + d.getDate() + '/' + d.getFullYear();
+    this.date = this.days[d.getDay()] + ' | ' + [d.getMonth() + 1] + '/' + d.getDate() + '/' + d.getFullYear();
   }
 
 

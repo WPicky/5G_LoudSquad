@@ -34,6 +34,12 @@ export class MessagesListComponent implements OnChanges, OnInit {
 
     this.conversationsService.currentPreviewMessage.subscribe(message => this.previewMessage = message);
 
+    this.conversationsService.currentConversation.subscribe(conv => {
+      if (!this.messagesList || this.messagesList.length === 0) {
+        this.messagesList = this.setMessagesList(conv.lastMessages);
+      }
+    });
+
     setInterval(() => {
       this.getMessages(30);
     }, 3000);
@@ -43,7 +49,16 @@ export class MessagesListComponent implements OnChanges, OnInit {
     this.conversationsService.getMessages(this.conversationId, messagesNumber)
       .subscribe((res: ApiResponse) => {
         this.conversationsService.changeCurrentPreviewMessage('');
-        this.messagesList = (res.payload || {}).messages;
+        this.messagesList = this.setMessagesList((res.payload || {}).messages);
       });
+  }
+
+  private setMessagesList(list) {
+    const messagesList = list;
+    messagesList.map(message => {
+      message.content = message.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
+      return message;
+    });
+    return messagesList;
   }
 }
