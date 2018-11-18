@@ -7,6 +7,7 @@
 1. Cloner le repo git : ```git clone git@ssh.dev.azure.com:v3/jimmymammeri/5GYnov/5GYnov```
 1. Se placer dans le projet : ```cd 5GYnov```
 1. Installer les dépendances : ```npm install```
+1. Dans le fichier `src/environments/environment.ts` modifier la variable `backendUrl` pour lui donner l'adresse du serveur backend
 1. Compiler le projet : ```ng build``` (Pour le moment, ne pas mettre le flag --prod)
 1. Placer le dossier du projet (dans le dossier `dist/`) sur votre seveur
 
